@@ -1,0 +1,23 @@
+.pagination {
+   &__items {
+      background-color: #f4f4f4;
+      display: flex;
+      align-items: center;
+      border-radius: 50px;
+   }
+   &__item {
+      cursor: pointer;
+      font-size: 14px;
+      color: #0e0e2d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      &.active {
+         background-color: rgba(#32abe0, 0.1);
+         color: #32abe0;
+      }
+   }
+}

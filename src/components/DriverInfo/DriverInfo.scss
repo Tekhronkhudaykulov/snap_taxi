@@ -1,0 +1,38 @@
+.driver-info {
+   display: grid;
+   align-content: start;
+   position: fixed;
+   height: 100%;
+   width: 275px;
+   top: 0;
+   right: 0;
+   z-index: 6;
+   padding: 90px 30px 0;
+   text-align: center;
+   box-shadow: -1px 0 25px rgba(#3c3c3c, 0.1);
+   background-color: #fff;
+   &__img {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      margin: 10px auto;
+   }
+   &__name {
+      font-weight: 500;
+      color: #232323;
+   }
+   &__earning {
+      font-size: 14px;
+      padding: 15px 0 10px;
+   }
+   &__history {
+      color: #32abe0;
+      font-size: 14px;
+   }
+   &__change {
+   }
+   &__upbalance {
+   }
+   &__block {
+   }
+}

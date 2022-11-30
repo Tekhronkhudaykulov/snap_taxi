@@ -1,0 +1,66 @@
+.register-container{
+    position: absolute;
+    transform: translate(38%, 0);
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+    box-shadow: 0px 1px 15px 3px rgb(220, 219, 215);
+    margin-top: 100px;
+
+    margin-bottom: 100px;
+    
+    .hamd{
+        font-size: 55px;
+        font-weight: bold;
+        margin: 0;
+    }
+    .kirish{
+        font-size: 35px;
+        color: gray;
+        font-weight: bold;
+    }
+    .input-register{
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        .input-icon{
+            position: relative;
+            p{
+                position: absolute;
+                margin-left: auto;
+                position: absolute;
+                top: 38px;
+                right: 18px;
+            }
+        }
+        input{
+            margin-top: 20px;
+            margin-bottom: 15px;
+            width: 350px;
+            height: 50px;
+            padding: 0 20px;
+            outline: none;
+            border: 1px solid #d4d9e4;
+        }
+        span{
+            line-height: 18px;
+            margin-left: auto;
+            color: #858e9e;
+            cursor: pointer;
+        }
+        button{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            height: 54px;
+            border: none;
+             background-color:  #32abe0;
+           color: white;
+            font-size:20px;
+            font-weight: bold;
+        }
+    }
+}
