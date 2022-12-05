@@ -7,8 +7,7 @@ interface InputTextType {
   placeholder: string;
   prompt: boolean | string;
   nameInput: string;
-  name: string;
-  formProps: () => void;
+  onChange: () => void;
 }
 
 function InputText({
@@ -16,15 +15,15 @@ function InputText({
   placeholder,
   prompt,
   nameInput,
-  formProps,
+  onChange,
 }: InputTextType) {
   return (
     <label className="input-text">
       <span className="input-text__label">{label}</span>
       <div className="input-text__input">
         <input
+          onChange={onChange}
           name={nameInput}
-          {...formProps}
           type="text"
           placeholder={placeholder}
         />
@@ -34,39 +33,19 @@ function InputText({
   );
 }
 
-function InputForPhone({ label, prompt }: InputTextType) {
-  const {
-    control,
-    formState: { errors },
-  } = useForm();
-  return (
-    <label className="input-text">
-      <span className="input-text__label">{label}</span>
-      <div className="input-text__input">
-        <Controller
-          control={control}
-          name="phone"
-          rules={{ required: true }}
-          render={({ field: { ref, ...field } }) => (
-            <PhoneInput
-              {...field}
-              country={"uz"}
-              defaultMask={"(..) ...-..-.."}
-              placeholder="+998"
-              alwaysDefaultMask={true}
-              name="phone"
-              inputExtraProps={{
-                ref,
-                required: true,
-                autoFocus: true,
-              }}
-            />
-          )}
-        />
-        {prompt ? <span className="input-text__prompt">{prompt}</span> : null}
-      </div>
-    </label>
-  );
-}
+// function InputForPhone({ label, prompt }: InputTextType) {
+//   const {
+//     control,
+//     formState: { errors },
+//   } = useForm();
+//   return (
+//     <label className="input-text">
+//       <span className="input-text__label">{label}</span>
+//       <div className="input-text__input">
+//         {prompt ? <span className="input-text__prompt">{prompt}</span> : null}
+//       </div>
+//     </label>
+//   );
+// }
 
-export { InputText, InputForPhone };
+export { InputText };

@@ -1,6 +1,5 @@
 .register-container{
     position: absolute;
-    transform: translate(38%, 0);
     width: 600px;
     margin: 0 auto;
     display: flex;
@@ -27,6 +26,10 @@
         display: flex;
         flex-direction: column;
         margin-top: 30px;
+        .validation{
+            display: flex;
+            flex-direction: column;
+        }
         .input-icon{
             position: relative;
             p{
@@ -45,6 +48,7 @@
             padding: 0 20px;
             outline: none;
             border: 1px solid #d4d9e4;
+            color: black !important;
         }
         span{
             line-height: 18px;
@@ -57,8 +61,8 @@
             margin-bottom: 20px;
             height: 54px;
             border: none;
-             background-color:  #32abe0;
-           color: white;
+            background-color:  #32abe0;
+            color: white;
             font-size:20px;
             font-weight: bold;
         }

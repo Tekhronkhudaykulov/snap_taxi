@@ -1,5 +1,11 @@
-import { useForm, Resolver } from "react-hook-form";
-import { InputForPhone, InputText } from "../components/InputText/InputText";
+import {
+  useForm,
+  Resolver,
+  useFormState,
+  SubmitHandler,
+  Controller,
+} from "react-hook-form";
+import { InputText } from "../components/InputText/InputText";
 import {
   SelectColor,
   SelectAutoModel,
@@ -7,44 +13,48 @@ import {
 } from "../components/Select/Select";
 import CheckBox from "../components/CheckBox/CheckBox";
 import NoPhoto from "../img/no-photo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "../store";
 
-type FormValues = {
+interface IsDriverForm {
+  // photo: string | {};
   name: string;
-  avatar: string;
-  passportNumber: string;
-  autoModel: string;
-  gosNumber: string;
-  birthdat: number;
-  phone: number;
-  photoCars: string[];
-};
-
-const resolver: Resolver<FormValues> = async (values) => {
-  return {
-    values: values.name ? values : {},
-    errors: !values.name
-      ? {
-          name: {
-            type: "required",
-            message: "This is required.",
-          },
-        }
-      : {},
+  car: {
+    type: string;
+    color: string;
+    // brand: string;
+    number: string;
   };
-};
+  phone: string;
+  birthday: string | number;
+  // photoCards: [];
+  rates: [];
+}
 
 const AddDriver = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>({ resolver });
-  const onSubmit = handleSubmit((data) => console.log(data));
-
   const [selectedImages, setSelectedImages] = useState([]);
 
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.RateModel.getRatesLoad();
+  }, []);
+
+  const allRates = useSelector((state: RootState) => state.RateModel.Rates);
+
+  const { handleSubmit, control } = useForm<IsDriverForm>();
+  const { errors } = useFormState({
+    control,
+  });
+
+  const onSubmit: SubmitHandler<IsDriverForm> = async (data) => {
+    console.log(data);
+  };
+
   const onSelectFile = (event: any) => {
+    console.log({ event });
     const selectedFiles = event.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
 
@@ -74,58 +84,117 @@ const AddDriver = () => {
         <i className="isax-arrow-left text-2xl cursor-pointer mr-4"></i>
         <h2 className="font-medium">Добавления водителя в систему</h2>
       </div>
-      <form onSubmit={onSubmit} className="w-3/4">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-3/4">
         <div className="flex gap-x-8 items-end mb-6">
-          <label class="input-file">
+          <label className="input-file">
             <img src={NoPhoto} id="img_file" alt="img " />
-            <input
-              type="file"
-              multiple
-              name="Ads[imageFiles][]"
-              onchange="loadImage(event)"
-              id="file-input"
-              className="img-input"
-              style={{ display: "none" }}
-              onChange={(e) => {
-                convertBase64(
-                  e.target.files[0],
-                  document.querySelectorAll("#img_file")[0]
-                );
-                setPhoto(e.target.files[0]);
-              }}
+            <Controller
+              control={control}
+              name="photo"
+              render={({ field }) => (
+                <input
+                  type="file"
+                  multiple
+                  name="Ads[imageFiles][]"
+                  onchange="loadImage(event)"
+                  id="file-input"
+                  className="img-input"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    convertBase64(
+                      e.target.files[0],
+                      document.querySelectorAll("#img_file")[0]
+                    );
+                    // field.onChange(e.target.files[0]);
+                  }}
+                />
+              )}
             />
           </label>
           <img src="" className="img-input" id="img_file" alt="" />
           <div>
-            <InputText
-              nameInput="name"
-              label={"Ф.И.О"}
-              placeholder={"Введите данные"}
-              formProps={register("name", { required: true })}
+            <Controller
+              control={control}
+              name="name"
+              render={({ field }) => (
+                <InputText
+                  nameInput="name"
+                  onChange={(e) => field.onChange(e)}
+                  label={"Ф.И.О"}
+                  placeholder={"Введите данные"}
+                />
+              )}
             />
-            {errors.name && (
-              <p className="validation">Malumotlarni kiriting!</p>
-            )}
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-8 gap-y-5 mb-6">
-          <InputText
-            label={"Серия и номер паспорта"}
-            placeholder={"Введите данные"}
+          <Controller
+            control={control}
+            name="car.type"
+            render={({ field }) => (
+              <SelectAutoModel
+                onchange={(e) => field.onChange(e)}
+                label={"Модель авто"}
+              />
+            )}
           />
-          <SelectAutoModel label={"Модель авто"} />
-          <SelectColor label={"Цвет авто"} />
-          <InputText
-            label={"Государственный номер"}
-            placeholder={"Введите данные"}
+          <Controller
+            control={control}
+            name="car.color"
+            render={({ field }) => (
+              <SelectColor
+                onchange={(e) => field.onChange(e)}
+                label={"Цвет авто"}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="car.number"
+            render={({ field }) => (
+              <InputText
+                label={"Государственный номер"}
+                placeholder={"Введите данные"}
+                onChange={(e) => field.onChange(e)}
+              />
+            )}
           />
           <div>
-            <DataPicker label="Дата рождения" />
+            <Controller
+              control={control}
+              name="birthday"
+              render={({ field }) => (
+                <DataPicker
+                  onchange={(e) => field.onChange(e)}
+                  label="Дата рождения"
+                />
+              )}
+            />
           </div>
-          <InputForPhone
-            nameInput="phone"
-            label={"Номер телефона"}
-            placeholder={"Введите данные"}
+          <Controller
+            control={control}
+            name="phone"
+            rules={{ required: true }}
+            render={({ field: { ref, ...field } }) => (
+              <label className="input-text">
+                <span className="input-text__label">Phone</span>
+                <div className="input-text__input">
+                  <PhoneInput
+                    {...field}
+                    country={"uz"}
+                    defaultMask={"(..) ...-..-.."}
+                    placeholder="+998"
+                    alwaysDefaultMask={true}
+                    onChange={(e) => field.onChange(e)}
+                    inputExtraProps={{
+                      ref,
+                      required: true,
+                      autoFocus: true,
+                    }}
+                  />
+                </div>
+              </label>
+            )}
           />
         </div>
         <div className="photo-car mb-10">
@@ -133,12 +202,21 @@ const AddDriver = () => {
             <span>
               Добавить <br /> фото авто
             </span>
-            <input
-              type="file"
-              name="images"
-              onChange={onSelectFile}
-              multiple
-              accept="image/png , image/jpeg, image/webp"
+            <Controller
+              control={control}
+              name="photoCards"
+              render={({ field }) => (
+                <input
+                  type="file"
+                  name="images"
+                  onChange={(e) => {
+                    onSelectFile(e);
+                    // field.onChange(e.target.files);
+                  }}
+                  multiple
+                  accept="image/png , image/jpeg, image/webp"
+                />
+              )}
             />
           </label>
           <div className="photo-car__items">
@@ -166,11 +244,18 @@ const AddDriver = () => {
         <div className="grid justify-items-start">
           <h3 className="text-gray-500 mb-4">Выберите тарифы</h3>
           <div className="flex items-center gap-7">
-            <CheckBox text={"Эконом"} />
-            <CheckBox text={"Стандарт"} />
-            <CheckBox text={"Комфорт"} />
-            <CheckBox text={"Бизнес"} />
-            <CheckBox text={"Доставка"} />
+            {allRates?.map((item) => (
+              <Controller
+                control={control}
+                name="rates"
+                render={({ field }) => (
+                  <CheckBox
+                    item={item}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                )}
+              />
+            ))}
           </div>
         </div>
         <button type="submit" className="btn mt-10">

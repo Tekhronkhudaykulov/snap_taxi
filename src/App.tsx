@@ -20,6 +20,8 @@ import { setAuthHeader } from "./store/auth";
 import ColorPage from "./pages/Color";
 import Type from "./pages/Type";
 import Car from "./pages/Car";
+import Tarifs from "./pages/Tarifs";
+import MapForProject from "./pages/Map";
 
 function RequireAuth({ children }: any) {
   const token = localStorage.getItem("@token");
@@ -45,7 +47,7 @@ export default function App() {
             path="/"
             element={
               <RequireAuth>
-                <Map />
+                <MapForProject />
               </RequireAuth>
             }
           ></Route>
@@ -140,6 +142,15 @@ export default function App() {
             }
           ></Route>
           {/* Car */}
+          <Route
+            path="/tarifs"
+            element={
+              <RequireAuth>
+                <Tarifs />
+              </RequireAuth>
+            }
+          ></Route>
+          {/* Tarifs */}
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -14,11 +14,11 @@ const Layout = (props: any) => {
       {location.pathname === "/auth" ? (
         props.children
       ) : (
-        <>
+        <div id="layout-wrapper">
           <Header />
           <Sidebar />
           {props.children}
-        </>
+        </div>
       )}
     </>
   );

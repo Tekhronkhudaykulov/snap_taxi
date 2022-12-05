@@ -13,7 +13,7 @@ interface ModalType {
 }
 const ModalForType = ({ show, handleClose, handleShow }: ModalType) => {
   const [brand, setBrand] = useState("");
-  console.log(brand);
+
   const [name, setName] = useState("");
 
   const { type } = useSelector((state: RootState) => state.Directory);

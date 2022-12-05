@@ -1,13 +1,20 @@
+import { Rates } from "../../store/rates/types";
 import "./CheckBox.scss";
 
 interface CheckboxType {
-  text: string;
+  item: Rates;
+  onChange: () => void;
 }
-const CheckBox = ({ text }: CheckboxType) => {
+const CheckBox = ({ item, onChange }: CheckboxType) => {
   return (
     <label className="checkbox">
-      <input type="checkbox" />
-      <span>{text}</span>
+      <input
+        id={item?.id}
+        value={item?.title}
+        onChange={onChange}
+        type="checkbox"
+      />
+      <span>{item?.title}</span>
     </label>
   );
 };

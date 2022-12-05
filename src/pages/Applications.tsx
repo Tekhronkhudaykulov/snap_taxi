@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Table from "../components/Table/Table";
+import TableRowForOrders from "../components/Table/TableForOrders/TableRowForOrders";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
 
@@ -15,8 +15,8 @@ export default function Applications() {
 
   return (
     <main className="page page__applications">
-      <Title title={"Информация о статусе заявок"} />
-      <Table orders={orders} />
+      <Title title={"Информация о статусе заявок"} titleAll="" classes="" />
+      <TableRowForOrders orders={orders} />
     </main>
   );
 }

@@ -54,9 +54,9 @@ export default function Sidebar({}) {
           </Link>
         </li>
         <li className="menu__item">
-          <Link to="/add-driver" className="menu__link">
-            <i className="isax-user-cirlce-add"></i>
-            Регистрация водтелей
+          <Link to="/tarifs" className="menu__link">
+            <i className="isax-receipt-search"></i>
+            Тарифы
           </Link>
         </li>
         <li className="menu__item">

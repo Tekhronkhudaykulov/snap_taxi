@@ -1,179 +1,147 @@
-import { SelectPoligon } from "../components/Select/Select";
 import { InputText } from "../components/InputText/InputText";
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+  useFormState,
+} from "react-hook-form";
+import NoPhoto from "../img/no-image.png";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "../store";
 
+interface IsDriverForm {
+  title: string;
+  minPrice: string | number;
+  pricePerKm: string | number;
+  pricePerMin: string | number;
+  commission: string | number;
+  icon: {};
+}
 export default function TariffManage({}) {
+  const dispatch = useDispatch<Dispatch>();
+  const { handleSubmit, control } = useForm<IsDriverForm>();
+  const { errors } = useFormState({
+    control,
+  });
+
+  const onSubmit: SubmitHandler<IsDriverForm> = async (data) => {
+    dispatch.rates.addRateLoad(data);
+  };
+
+  const convertBase64 = (file, element) => {
+    const fileReader = new FileReader();
+
+    fileReader.addEventListener("load", function (e) {
+      element.src = e.target.result;
+    });
+
+    fileReader.readAsDataURL(file);
+  };
+
   return (
     <main className="page page__tariff-manage">
       <div className="flex items-center mb-5">
         <i className="isax-arrow-left text-2xl cursor-pointer mr-4"></i>
         <h2 className="font-medium">Управление тарифами</h2>
       </div>
-      <form className="mt-10 w-4/5">
-        <div className="grid grid-cols-4 mb-10">
-          <SelectPoligon label={"Выберите полигон"} />
-        </div>
-        <div className="grid grid-cols-3 mb-8">
-          <div className="econom border-r-2 border-r-gray-500 border-solid">
-            <h4 className="font-medium text-center mb-5">Эконом</h4>
-            <div className="grid gap-7 pr-10">
+      <h4 className="text-2xl font-medium	 text-center mb-2">Создать тариф</h4>
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-10 w-4/5">
+        <div className="grid gap-7 grid-cols-3 pr-10 mb-3">
+          <Controller
+            control={control}
+            name="title"
+            render={({ field }) => (
               <InputText
-                label={"Цена за вызов"}
-                nameInput=""
+                label={"title"}
+                onChange={(e) => field.onChange(e)}
+                nameInput="title"
                 placeholder=""
                 prompt=""
               />
+            )}
+          />
+          <Controller
+            control={control}
+            name="minPrice"
+            render={({ field }) => (
               <InputText
-                label={"Цена за вызов"}
+                onChange={(e) => field.onChange(e)}
+                label={"minPrice"}
                 prompt={"за 1 м"}
-                nameInput=""
+                nameInput="minPrice"
                 placeholder=""
               />
+            )}
+          />
+          <Controller
+            control={control}
+            name="pricePerKm"
+            render={({ field }) => (
               <InputText
-                label={"Цена за км (Загородом)"}
-                nameInput=""
-                placeholder=""
-                prompt={"за 1 м"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                prompt={"за 1 м"}
-                label={"В ожидании"}
-              />
-              <InputText
-                placeholder=""
-                prompt={"за 1 м"}
-                label={"В ожидании"}
-                nameInput=""
-              />
-              <InputText
+                label={"pricePerKm"}
+                onChange={(e) => field.onChange(e)}
+                nameInput="pricePerKm"
                 placeholder=""
                 prompt={"за 1 м"}
-                label={"В ожидании"}
-                nameInput=""
               />
+            )}
+          />
+          <Controller
+            control={control}
+            name="pricePerMin"
+            render={({ field }) => (
+              <InputText
+                nameInput="pricePerMin"
+                placeholder=""
+                prompt={"за 1 м"}
+                label={"pricePerMin"}
+                onChange={(e) => field.onChange(e)}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="commission"
+            render={({ field }) => (
               <InputText
                 placeholder=""
                 prompt={"за 1 м"}
-                label={"Бесплатных километров"}
-                nameInput=""
+                label={"commission"}
+                onChange={(e) => field.onChange(e)}
+                nameInput="commission"
               />
-              <InputText
-                placeholder=""
-                prompt={"за 1 м"}
-                label={"Процент"}
-                nameInput=""
-              />
-            </div>
-          </div>
-          <div className="standart border-r-2 border-r-gray-500 border-solid">
-            <h4 className="font-medium text-center mb-5">Стандарт</h4>
-            <div className="grid gap-7 px-8">
-              <InputText
-                label={"Цена за вызов"}
-                nameInput=""
-                placeholder=""
-                prompt=""
-              />
-              <InputText
-                label={"Цена за вызов"}
-                prompt={"за 1 м"}
-                nameInput=""
-                placeholder=""
-              />
-              <InputText
-                label={"Цена за км (Загородом)"}
-                prompt={"за 1 м"}
-                nameInput=""
-                placeholder=""
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"В ожидании"}
-                prompt={"за 1 м"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                prompt
-                label={"Кондиционер"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                prompt
-                label={"Перевозка животных"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"Бесплатных километров"}
-                prompt={"км"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"Процент"}
-                prompt={"%"}
-              />
-            </div>
-          </div>
-          <div className="comfort">
-            <h4 className="font-medium text-center mb-5">Комфорт</h4>
-            <div className="grid gap-7 pl-8">
-              <InputText
-                label={"Цена за вызов"}
-                nameInput=""
-                placeholder=""
-                prompt
-              />
-              <InputText
-                label={"Цена за вызов"}
-                prompt={"за 1 м"}
-                nameInput=""
-                placeholder=""
-              />
-              <InputText
-                label={"Цена за км (Загородом)"}
-                prompt={"за 1 м"}
-                nameInput=""
-                placeholder=""
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"В ожидании"}
-                prompt={"за 1 м"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                prompt
-                label={"Кондиционер"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                prompt
-                label={"Перевозка животных"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"Бесплатных километров"}
-                prompt={"км"}
-              />
-              <InputText
-                nameInput=""
-                placeholder=""
-                label={"Процент"}
-                prompt={"%"}
-              />
-            </div>
-          </div>
+            )}
+          />
+          <label className="input-file">
+            <img src={NoPhoto} id="img_file" alt="img " />
+            <Controller
+              control={control}
+              name="icon"
+              render={({ field }) => (
+                <input
+                  type="file"
+                  multiple
+                  name="Ads[imageFiles][]"
+                  onchange="loadImage(event)"
+                  id="file-input"
+                  className="img-input"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    convertBase64(
+                      e.target.files[0],
+                      document.querySelectorAll("#img_file")[0]
+                    );
+                    field.onChange(e.target.files[0]);
+                  }}
+                />
+              )}
+            />
+          </label>
+          <img src="" className="img-input" id="img_file" alt="" />
         </div>
-        <button className="btn">Сохранить</button>
+        <button className="btn" type="submit">
+          Сохранить
+        </button>
       </form>
     </main>
   );

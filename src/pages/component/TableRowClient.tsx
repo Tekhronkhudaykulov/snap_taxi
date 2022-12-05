@@ -5,9 +5,10 @@ import { GetBrandsType } from "../../store/directory/types";
 
 interface IsPhotoType {
   brand: GetBrandsType;
+  index: string | number;
 }
 
-const TableRowForCar = ({ brand }: IsPhotoType) => {
+const TableRowForCar = ({ brand, index }: IsPhotoType) => {
   const [isRejectAppShow, setIsRejectAppShow] = useState(false);
 
   return (
@@ -18,7 +19,7 @@ const TableRowForCar = ({ brand }: IsPhotoType) => {
           src={`${baseUrl}/${brand?.logo}`}
           alt=""
         />
-        {brand?._id}
+        {index}
       </div>
       <div className="td">{brand?.name}</div>
       {isRejectAppShow ? <RejectApplication id={19935} /> : null}

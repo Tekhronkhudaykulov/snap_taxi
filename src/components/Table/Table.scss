@@ -16,7 +16,42 @@
 .table .tbody {
    display: grid;
    gap: 10px;
+
 }
+
+// .shimmer {
+//    background-image: linear-gradient(90deg,#f6f7f9 0,#e9ebee 20%,#f6f7f9 40%,#f6f7f9);
+//    background-size: 99% 100%;
+//    background-repeat: no-repeat;
+//    animation: shimmer 1s linear 1ms infinite backwards;
+//  }
+
+//  @keyframes shimmer {
+//    0% {
+//      background-position: 100% * 5 100%;
+//    }
+ 
+//    100% {
+//      background-position: 100% * 100 100%;
+//    }
+//  }
+
+
+// .loading-shimmer {
+//    animation: shimmer 2s infinite linear !important;
+//    background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%) !important;
+//    background-size: 1000px 100% !important;
+// }  
+
+// @keyframes shimmer {
+//    0% {
+//        background-position: -1000px 0 !important;
+//    }
+//    100% {
+//        background-position: 1000px 0 !important;
+//    }
+// }
+
 
 .table .trow {
    display: grid;

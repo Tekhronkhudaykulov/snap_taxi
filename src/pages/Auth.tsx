@@ -1,61 +1,89 @@
 import { useNavigate } from "react-router-dom";
+import {
+  useForm,
+  SubmitHandler,
+  useFormState,
+  Controller,
+} from "react-hook-form";
 import { FaRegEye } from "react-icons/fa";
 import "../styles/auth.scss";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "../store";
+import {
+  loginValidation,
+  passwordValidation,
+} from "../components/Validation/Validation";
+
+interface ISignInForm {
+  login: string;
+  password: string;
+}
 
 const Auth = () => {
   const navigate = useNavigate();
-
-  const [login, setLogin] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
   const dispatch = useDispatch<Dispatch>();
 
-  const authFunction = async () => {
+  const { handleSubmit, control } = useForm<ISignInForm>();
+  const { errors } = useFormState({
+    control,
+  });
+
+  const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
     try {
-      await dispatch.auth.authLoad({ login, password });
+      await dispatch.auth.authLoad(data);
       navigate("/");
     } catch (e) {
-      navigate("/auth");
-      alert("Error");
+      console.log(e);
     }
   };
 
   const isLoading = useSelector(
-    (state: RootState) => state.loading.effects.auth.authLoad
+    (state: RootState) => state.loading.models.auth
   );
 
   return (
-    <div>
-      <div className="register-container">
-        <p className="hamd">SNAP TAXI</p>
-        <div className="input-register">
-          <input
-            onChange={(e) => setLogin(e.target.value)}
-            type="text"
-            placeholder="Ведите логин"
+    <div className="register-container">
+      <p className="hamd">SNAP TAXI</p>
+      <form onSubmit={handleSubmit(onSubmit)} className="input-register">
+        <div className="validation">
+          <Controller
+            control={control}
+            name="login"
+            rules={loginValidation}
+            render={({ field }) => (
+              <input
+                onChange={(e) => field.onChange(e)}
+                value={field.value}
+                className="auth-form__input"
+              />
+            )}
           />
-          <div className="input-icon">
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Ведите пароль"
-            />
-            <p>
-              <FaRegEye size={18} />
-            </p>
-          </div>
-
-          <span>Forgot password ?</span>
-          <button onClick={authFunction}>
-            {isLoading ? "Loading..." : "Войти"}
-          </button>
+          {errors.login?.message}
         </div>
-      </div>
+        <div className="input-icon">
+          <div className="validation">
+            <Controller
+              control={control}
+              rules={passwordValidation}
+              name="password"
+              render={({ field }) => (
+                <input
+                  onChange={(e) => field.onChange(e)}
+                  value={field.value}
+                  type="password"
+                  className="auth-form__input"
+                />
+              )}
+            />
+            {errors.password?.message}
+          </div>
+          <p>
+            <FaRegEye size={18} />
+          </p>
+        </div>
+        <span>Forgot password ?</span>
+        <button type="submit">{isLoading ? "Loading..." : "Войти"}</button>
+      </form>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
 import TableRowForCar from "./component/TableRowClient";
-import TableRowClient from "./component/TableRowClient";
 
 const Car = () => {
   const [isClientInfoShow, setisClientInfoShow] = useState(false);
@@ -18,6 +17,10 @@ const Car = () => {
   }, []);
 
   const { brand } = useSelector((state: RootState) => state.Directory);
+
+  const isLoading = useSelector(
+    (state: RootState) => state.loading.effects.Directory.getBrands
+  );
 
   const [show, setShow] = useState(false);
 
@@ -52,7 +55,7 @@ const Car = () => {
           <article className="tbody">
             {brand.map((item, index) => (
               <div key={index}>
-                <TableRowForCar brand={item} />
+                <TableRowForCar brand={item} index={index} />
               </div>
             ))}
           </article>

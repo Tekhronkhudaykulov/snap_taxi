@@ -1,4 +1,4 @@
-const formData = (obj: any, form: any, namespace: any) => {
+const formData = (obj, form, namespace) => {
   const fd = form || new FormData();
   let formKey;
 
