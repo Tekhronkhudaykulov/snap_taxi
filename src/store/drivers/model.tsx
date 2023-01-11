@@ -22,5 +22,10 @@ export const Drivers = createModel<RootModel>()({
         dispatch.Drivers.setDrivers(data.data);
       } catch (e) {}
     },
+    async addDriverLoad(payload) {
+      try {
+        const { data } = await api.post("driver", payload);
+      } catch (e) {}
+    },
   }),
 });

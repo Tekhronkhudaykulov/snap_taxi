@@ -4,4 +4,7 @@ export const initialState: InitialState = {
   colorList: [],
   brand: [],
   type: [],
+  brandById: {},
+  typeById: {},
+  colorById: {},
 };

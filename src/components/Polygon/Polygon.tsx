@@ -1,7 +1,7 @@
 import "./Polygon.scss";
 import { InputText } from "../InputText/InputText";
 
-export default function Polygon({}) {
+export default function PolygonInput({}) {
   return (
     <form className="polygon">
       <h4 className="mt-16 mb-8 text-center font-medium text-stone-800">

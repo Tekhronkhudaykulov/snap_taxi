@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import DriverInfo from "../components/DriverInfo/DriverInfo";
 import Pagination from "../components/Pagination/Pagination";
@@ -14,7 +13,7 @@ const Tarifs = () => {
     <main className="page page__drivers">
       <section className="flex justify-between">
         <Title title={"Тарифы"} titleAll="437" />
-        <Link className="btn" to="/add-driver">
+        <Link className="btn" to="/tariff-manage">
           Добавить тарифы +
         </Link>
       </section>

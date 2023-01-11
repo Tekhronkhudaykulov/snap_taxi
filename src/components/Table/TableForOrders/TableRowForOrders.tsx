@@ -1,6 +1,6 @@
-import TableRowItems from "../TableRow";
 import "../Table.scss";
 import TableRowItemsOrders from "./TableRow";
+
 export default function TableRowForOrders({ orders }: any) {
   return (
     <div className="table-out">

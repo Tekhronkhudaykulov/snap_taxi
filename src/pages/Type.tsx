@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClientInfo from "../components/ClientInfo/ClientInfo";
+import ModalForEditType from "../components/Modal/ModalForEditType";
 import ModalForType from "../components/Modal/ModalForType";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
-import TableRowClient from "./component/TableRowClient";
 import TableRowForType from "./component/TableRowForType";
 
 const Type = () => {
@@ -19,26 +19,27 @@ const Type = () => {
 
   const [isClientInfoShow, setisClientInfoShow] = useState(false);
 
-  const [show, setShow] = useState(false);
+  const { show } = useSelector((state: RootState) => state.other);
 
-  const handleClose = () => setShow(false);
+  const { showForType } = useSelector((state: RootState) => state.other);
 
-  const handleShow = () => setShow(true);
+  const { typeById } = useSelector((state: RootState) => state.Directory);
 
   return (
     <>
-      {show && (
-        <ModalForType
-          show={show}
-          handleClose={handleClose}
-          handleShow={handleShow}
-        />
+      {show && <ModalForType show={show} />}
+      {showForType && (
+        <ModalForEditType typeById={typeById} show={showForType} />
       )}
 
       <main className="page page__clients">
         <section className="flex justify-between">
-          <Title title="Типы" titleAll="743" />
-          <button className="btn" onClick={handleShow} type="button">
+          <Title title="Типы" titleAll={type.length} />
+          <button
+            className="btn"
+            onClick={() => dispatch.other.setShow(true)}
+            type="button"
+          >
             Добавить тип +
           </button>
         </section>

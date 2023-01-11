@@ -1,6 +1,17 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "../../../store";
 import TableRowItemsClient from "./TableRow";
 
 const TableRowForClient = () => {
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.Clients.getClient();
+  }, []);
+
+  const { client } = useSelector((state: RootState) => state.Clients);
+
   return (
     <div className="table-out">
       <section className="table">
@@ -14,10 +25,11 @@ const TableRowForClient = () => {
           </div>
         </article>
         <article className="tbody">
-          <TableRowItemsClient />
-          <TableRowItemsClient />
-          <TableRowItemsClient />
-          <TableRowItemsClient />
+          {client?.map((item, index) => (
+            <div key={index}>
+              <TableRowItemsClient clients={item} index={index} />
+            </div>
+          ))}
         </article>
       </section>
     </div>

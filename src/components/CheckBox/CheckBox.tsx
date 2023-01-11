@@ -9,8 +9,8 @@ const CheckBox = ({ item, onChange }: CheckboxType) => {
   return (
     <label className="checkbox">
       <input
-        id={item?.id}
-        value={item?.title}
+        id={item?._id}
+        value={item?._id}
         onChange={onChange}
         type="checkbox"
       />

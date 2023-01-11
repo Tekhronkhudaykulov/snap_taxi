@@ -3,7 +3,7 @@ import "./title.scss";
 interface TitleType {
   title: string;
   classes: string;
-  titleAll: string;
+  titleAll: string | number;
 }
 export default function Title({ title, classes, titleAll }: TitleType) {
   return (

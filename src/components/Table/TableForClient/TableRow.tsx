@@ -1,16 +1,22 @@
 import { useState } from "react";
 import RejectApplication from "../../../components/RejectApplication/RejectApplication";
+import { GetClient } from "../../../store/clients/types";
 
-const TableRowItemsClient = () => {
+interface Clients {
+  clients: GetClient;
+  index: string | number;
+}
+const TableRowItemsClient = ({ clients, index }: Clients) => {
   const [isRejectAppShow, setIsRejectAppShow] = useState(false);
 
   return (
     <div className="trow">
       <div className="td td-for-client">
         <img style={{ width: "40px", height: "40px" }} src="" alt="" />
-        _id
+        {index}
       </div>
-      <div className="td">name</div>
+      <div className="td">{clients?.user?.role}</div>
+      <div className="td">{clients?.user?.phone}</div>
       {isRejectAppShow ? <RejectApplication id={19935} /> : null}
     </div>
   );

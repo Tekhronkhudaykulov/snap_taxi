@@ -22,6 +22,7 @@ import Type from "./pages/Type";
 import Car from "./pages/Car";
 import Tarifs from "./pages/Tarifs";
 import MapForProject from "./pages/Map";
+import AddPolygon from "./pages/AddPolygon";
 
 function RequireAuth({ children }: any) {
   const token = localStorage.getItem("@token");
@@ -102,6 +103,14 @@ export default function App() {
             element={
               <RequireAuth>
                 <TariffManage />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/add-polygon"
+            element={
+              <RequireAuth>
+                <AddPolygon />
               </RequireAuth>
             }
           ></Route>

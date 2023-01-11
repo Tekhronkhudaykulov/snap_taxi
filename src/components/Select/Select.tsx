@@ -33,10 +33,10 @@ function SelectAutoModel({ label, onchange }: SelectType) {
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
-    dispatch.Directory.getBrands();
+    dispatch.Directory.getTypes();
   }, []);
 
-  const { brand, colorList } = useSelector(
+  const { type, colorList } = useSelector(
     (state: RootState) => state.Directory
   );
   return (
@@ -46,7 +46,7 @@ function SelectAutoModel({ label, onchange }: SelectType) {
         <i className="isax-arrow-down-1"></i>
         <select onChange={onchange}>
           <option disabled>Выберите данные</option>
-          {brand.map((item) => (
+          {type.map((item) => (
             <option value={item?._id}>{item?.name}</option>
           ))}
         </select>

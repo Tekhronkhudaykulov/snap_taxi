@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClientInfo from "../components/ClientInfo/ClientInfo";
 import ModalForColors from "../components/Modal/ModalForColors";
+import ModalForEditColor from "../components/Modal/ModalForEditColor";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
@@ -34,16 +35,14 @@ const ColorPage = () => {
     setShow(true);
   };
 
+  const { showColor } = useSelector((state: RootState) => state.other);
   return (
     <>
       {show && (
-        <ModalForColors
-          show={show}
-          handleClose={handleClose}
-          handleShow={handleShow}
-          title="Color"
-        />
+        <ModalForColors handleClose={handleClose} show={show} title="Color" />
       )}
+      {showColor && <ModalForEditColor show={showColor} title="Color" />}
+
       <main className="page page__clients">
         <section className="flex justify-between">
           <Title title="Color" titleAll="" />

@@ -5,7 +5,7 @@ import {
   useFormState,
   Controller,
 } from "react-hook-form";
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import "../styles/auth.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "../store";
@@ -13,6 +13,8 @@ import {
   loginValidation,
   passwordValidation,
 } from "../components/Validation/Validation";
+import { useState } from "react";
+import logo from "../img/logo.png";
 
 interface ISignInForm {
   login: string;
@@ -22,6 +24,8 @@ interface ISignInForm {
 const Auth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch>();
+
+  const [active, setActive] = useState(false);
 
   const { handleSubmit, control } = useForm<ISignInForm>();
   const { errors } = useFormState({
@@ -43,7 +47,7 @@ const Auth = () => {
 
   return (
     <div className="register-container">
-      <p className="hamd">SNAP TAXI</p>
+      <img style={{ width: "200px", objectFit: "contain" }} src={logo} alt="" />
       <form onSubmit={handleSubmit(onSubmit)} className="input-register">
         <div className="validation">
           <Controller
@@ -70,7 +74,7 @@ const Auth = () => {
                 <input
                   onChange={(e) => field.onChange(e)}
                   value={field.value}
-                  type="password"
+                  type={active ? "text" : "password"}
                   className="auth-form__input"
                 />
               )}
@@ -78,7 +82,11 @@ const Auth = () => {
             {errors.password?.message}
           </div>
           <p>
-            <FaRegEye size={18} />
+            {active ? (
+              <FaRegEyeSlash onClick={() => setActive(false)} />
+            ) : (
+              <FaRegEye size={18} onClick={() => setActive(true)} />
+            )}
           </p>
         </div>
         <span>Forgot password ?</span>

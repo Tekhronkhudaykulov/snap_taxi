@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,18 +7,20 @@ import "./Modal.scss";
 
 interface ModalType {
   show: boolean;
-  handleClose: () => void;
   name: string;
-  handleShow: () => void;
 }
-const ModalForType = ({ show, handleClose, handleShow }: ModalType) => {
+const ModalForType = ({ show }: ModalType) => {
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.Directory.getBrands();
+  }, []);
+
   const [brand, setBrand] = useState("");
 
   const [name, setName] = useState("");
 
-  const { type } = useSelector((state: RootState) => state.Directory);
-
-  const dispatch = useDispatch<Dispatch>();
+  const brandList = useSelector((state: RootState) => state.Directory.brand);
 
   const payload = () => {
     try {
@@ -28,13 +30,11 @@ const ModalForType = ({ show, handleClose, handleShow }: ModalType) => {
       });
       setName("");
       setBrand("");
-      handleClose();
-    } catch (e) {
-      handleShow();
-    }
+      dispatch.other.setShow(false);
+    } catch (e) {}
   };
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show}>
       <Modal.Header closeButton>
         <Modal.Title>Типы</Modal.Title>
       </Modal.Header>
@@ -47,14 +47,17 @@ const ModalForType = ({ show, handleClose, handleShow }: ModalType) => {
           />
           <select onChange={(e) => setBrand(e.target.value)} placeholder="name">
             <option value=""></option>
-            {type.map((item) => (
-              <option value={item?.brand}>{item?.name}</option>
+            {brandList.map((item) => (
+              <option value={item?._id}>{item?.name}</option>
             ))}
           </select>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button
+          variant="secondary"
+          onClick={() => dispatch.other.setShow(false)}
+        >
           Закрыт
         </Button>
         <Button variant="primary" onClick={payload}>

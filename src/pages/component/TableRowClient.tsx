@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import RejectApplication from "../../components/RejectApplication/RejectApplication";
 import { baseUrl } from "../../contants/API";
+import { Dispatch } from "../../store";
 import { GetBrandsType } from "../../store/directory/types";
 
 interface IsPhotoType {
@@ -9,10 +11,15 @@ interface IsPhotoType {
 }
 
 const TableRowForCar = ({ brand, index }: IsPhotoType) => {
-  const [isRejectAppShow, setIsRejectAppShow] = useState(false);
-
+  const dispatch = useDispatch<Dispatch>();
   return (
-    <div className="trow">
+    <div
+      className="trow"
+      onClick={() => {
+        dispatch.other.setShowForBrand(true);
+        dispatch.Directory.getBrandById(brand?._id);
+      }}
+    >
       <div className="td td-for-client">
         <img
           style={{ width: "40px", height: "40px" }}
@@ -22,7 +29,6 @@ const TableRowForCar = ({ brand, index }: IsPhotoType) => {
         {index}
       </div>
       <div className="td">{brand?.name}</div>
-      {isRejectAppShow ? <RejectApplication id={19935} /> : null}
     </div>
   );
 };

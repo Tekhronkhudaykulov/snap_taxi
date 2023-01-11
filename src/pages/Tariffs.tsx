@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-import Polygon from "../components/Polygon/Polygon";
+import { YMaps, Map, FullscreenControl, Polygon } from "react-yandex-maps";
+import PolygonInput from "../components/Polygon/Polygon";
 import Title from "../components/Title/Title";
+import { Dispatch, RootState } from "../store";
 
 export default function Tariffs({}) {
   const [isPolygonShow, setIsPolygonShow] = useState(false);
+
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.Maps.getPolygon();
+  }, []);
+
+  const { region } = useSelector((state: RootState) => state.Maps);
 
   return (
     <main className="page page__tariffs">
       <section className="flex mb-5">
         <Title title="Водители" titleAll="" />
         <div className="flex gap-4 ml-10">
-          <Link to="" className="btn">
+          <Link to="/add-polygon" className="btn">
             Создать полигон
           </Link>
           <Link to="" className="btn">
@@ -23,14 +33,21 @@ export default function Tariffs({}) {
           </Link>
         </div>
       </section>
-      <iframe
-        className="h-full"
-        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d35924.685705657575!2d69.28230246168626!3d41.306553609204876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2s!4v1667142542198!5m2!1sru!2s"
-        style={{ border: "0" }}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      ></iframe>
-      {isPolygonShow ? <Polygon /> : null}
+      <YMaps>
+        <Map
+          defaultState={{ center: [55.75, 37.57], zoom: 9 }}
+          width="100%"
+          height="700px"
+        >
+          <FullscreenControl />
+          {region.map((item) => (
+            <Polygon
+              defaultGeometry={item.polygon.coordinates.map((item) => item)}
+            />
+          ))}
+        </Map>
+      </YMaps>
+      {isPolygonShow ? <PolygonInput /> : null}
     </main>
   );
 }

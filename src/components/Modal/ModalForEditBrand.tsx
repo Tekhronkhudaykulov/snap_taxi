@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "../../store";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, RootState } from "../../store";
 import "./Modal.scss";
 
 interface ModalBrandTpye {
   show: boolean;
 }
-const ModalForBrand = ({ show }: ModalBrandTpye) => {
+
+const ModalForEditBrand = ({ show }: ModalBrandTpye) => {
   const dispatch = useDispatch<Dispatch>();
+
+  const { brandById } = useSelector((state: RootState) => state.Directory);
 
   const [logo, setPhoto] = useState({});
   const [name, setName] = useState("");
@@ -28,7 +32,6 @@ const ModalForBrand = ({ show }: ModalBrandTpye) => {
     try {
       const data = dispatch.Directory.addBrands({ logo, name });
       setName("");
-      dispatch.other.setShow(false);
     } catch (e) {}
   };
 
@@ -77,18 +80,28 @@ const ModalForBrand = ({ show }: ModalBrandTpye) => {
           </div>
           <input
             onChange={(e) => setName(e.target.value)}
-            value={name}
             type="text"
             placeholder="name"
+            defaultValue={brandById?.name}
+            name="name"
           />
         </div>
       </Modal.Body>
       <Modal.Footer>
         <Button
           variant="secondary"
-          onClick={() => dispatch.other.setShow(false)}
+          onClick={() => dispatch.other.setShowForBrand(false)}
         >
           Закрыт
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            dispatch.Directory.deleteBrandId(brandById?._id);
+            dispatch.other.setShowForBrand(false);
+          }}
+        >
+          Удалить
         </Button>
         <Button variant="primary" onClick={payload}>
           Сохранить
@@ -98,4 +111,4 @@ const ModalForBrand = ({ show }: ModalBrandTpye) => {
   );
 };
 
-export default ModalForBrand;
+export default ModalForEditBrand;

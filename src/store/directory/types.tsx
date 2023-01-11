@@ -16,8 +16,22 @@ export type GetType = {
   brand: string;
 };
 
+export type GetTypeByIdType = {
+  _id: string;
+  name: string;
+  brand: string;
+};
+
+export type GetColorByIdType = {
+  _id: string;
+  name: string;
+  brand: string;
+};
 export type InitialState = {
   colorList: Color[];
   brand: GetBrandsType[];
   type: GetType[];
+  brandById: GetBrandsType | {};
+  typeById: GetTypeByIdType | {};
+  colorById: GetColorByIdType | {};
 };

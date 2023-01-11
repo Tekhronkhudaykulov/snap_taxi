@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClientInfo from "../components/ClientInfo/ClientInfo";
 import ModalForBrand from "../components/Modal/ModalForBrand";
+import ModalForEditBrand from "../components/Modal/ModalForEditBrand";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
 import TableRowForCar from "./component/TableRowClient";
 
 const Car = () => {
-  const [isClientInfoShow, setisClientInfoShow] = useState(false);
-
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
@@ -22,25 +21,21 @@ const Car = () => {
     (state: RootState) => state.loading.effects.Directory.getBrands
   );
 
-  const [show, setShow] = useState(false);
+  const { show } = useSelector((state: RootState) => state.other);
 
-  const handleClose = () => setShow(false);
-
-  const handleShow = () => setShow(true);
-
+  const { showForBrand } = useSelector((state: RootState) => state.other);
   return (
     <main className="page page__clients">
-      {show && (
-        <ModalForBrand
-          show={show}
-          handleClose={handleClose}
-          handleShow={handleShow}
-        />
-      )}
+      {show && <ModalForBrand show={show} />}
+      {showForBrand && <ModalForEditBrand show={showForBrand} />}
 
       <section className="flex justify-between">
         <Title title="Бренд" titleAll="" />
-        <button className="btn" onClick={handleShow} type="button">
+        <button
+          className="btn"
+          onClick={() => dispatch.other.setShow(true)}
+          type="button"
+        >
           Добавить бренд +
         </button>
       </section>
@@ -53,7 +48,7 @@ const Car = () => {
             </div>
           </article>
           <article className="tbody">
-            {brand.map((item, index) => (
+            {brand?.map((item, index) => (
               <div key={index}>
                 <TableRowForCar brand={item} index={index} />
               </div>
@@ -62,7 +57,6 @@ const Car = () => {
         </section>
       </div>
       <Pagination showed={8} all="437" />
-      {isClientInfoShow ? <ClientInfo name="Абдулаев Рустам" /> : null}
     </main>
   );
 };
