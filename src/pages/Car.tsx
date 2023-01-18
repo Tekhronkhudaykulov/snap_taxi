@@ -18,7 +18,7 @@ const Car = () => {
   const { brand } = useSelector((state: RootState) => state.Directory);
 
   const isLoading = useSelector(
-    (state: RootState) => state.loading.effects.Directory.getBrands
+    (state: RootState) => state.loading.models.Directory
   );
 
   const { show } = useSelector((state: RootState) => state.other);
@@ -50,7 +50,11 @@ const Car = () => {
           <article className="tbody">
             {brand?.map((item, index) => (
               <div key={index}>
-                <TableRowForCar brand={item} index={index} />
+                <TableRowForCar
+                  brand={item}
+                  index={index}
+                  isLoading={isLoading}
+                />
               </div>
             ))}
           </article>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, RootState } from "../../../store";
-import { Driver } from "../../../store/drivers/types";
 import DriverInfo from "../../DriverInfo/DriverInfo";
 import TableRowItemsDriver from "./TableRow";
 
@@ -14,6 +13,10 @@ const TableRowForDrivers = () => {
   }, []);
 
   const { driverList } = useSelector((state: RootState) => state.Drivers);
+  const isLoading = useSelector(
+    (state: RootState) => state.loading.models.Drivers
+  );
+
   return (
     <div className="table-out" onClick={() => dispatch.other.setModal(true)}>
       <section className="table">
@@ -32,7 +35,12 @@ const TableRowForDrivers = () => {
         <article className="tbody">
           {driverList.map((item, index) => (
             <div key={index}>
-              <TableRowItemsDriver status="status" item={item} index={index} />
+              <TableRowItemsDriver
+                status="status"
+                item={item}
+                index={index}
+                isLoading={isLoading}
+              />
             </div>
           ))}
         </article>

@@ -11,7 +11,9 @@ const TableRowForClient = () => {
   }, []);
 
   const { client } = useSelector((state: RootState) => state.Clients);
-
+  const isLoading = useSelector(
+    (state: RootState) => state.loading.models.Clients
+  );
   return (
     <div className="table-out">
       <section className="table">
@@ -27,7 +29,11 @@ const TableRowForClient = () => {
         <article className="tbody">
           {client?.map((item, index) => (
             <div key={index}>
-              <TableRowItemsClient clients={item} index={index} />
+              <TableRowItemsClient
+                isLoading={isLoading}
+                clients={item}
+                index={index}
+              />
             </div>
           ))}
         </article>

@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { YMaps, Map, FullscreenControl, Polygon } from "react-yandex-maps";
 import PolygonInput from "../components/Polygon/Polygon";
 import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
+
+const mapState = {
+  center: [55.73, 37.9],
+  zoom: 10,
+};
 
 export default function Tariffs({}) {
   const [isPolygonShow, setIsPolygonShow] = useState(false);
@@ -16,6 +21,17 @@ export default function Tariffs({}) {
   }, []);
 
   const { region } = useSelector((state: RootState) => state.Maps);
+
+  const [coordinates, setCoordinates] = useState([]);
+
+  const instanceRef = useCallback((ref: any) => {
+    if (ref) {
+      ref.editor.startDrawing();
+      ref.geometry.events.add("change", (e: any) =>
+        setCoordinates(e.get("newCoordinates"))
+      );
+    }
+  }, []);
 
   return (
     <main className="page page__tariffs">
@@ -35,16 +51,25 @@ export default function Tariffs({}) {
       </section>
       <YMaps>
         <Map
-          defaultState={{ center: [55.75, 37.57], zoom: 9 }}
           width="100%"
           height="700px"
+          defaultState={mapState}
+          modules={[
+            "Polygon",
+            "geoObject.addon.editor",
+            "templateLayoutFactory",
+          ]}
         >
-          <FullscreenControl />
-          {region.map((item) => (
-            <Polygon
-              defaultGeometry={item.polygon.coordinates.map((item) => item)}
-            />
-          ))}
+          <Polygon
+            instanceRef={instanceRef}
+            geometry={coordinates}
+            options={{
+              editorDrawingCursor: "crosshair",
+              fillColor: "#00FF00",
+              strokeColor: "#0000FF",
+              strokeWidth: 5,
+            }}
+          />
         </Map>
       </YMaps>
       {isPolygonShow ? <PolygonInput /> : null}

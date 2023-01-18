@@ -12,7 +12,6 @@ const TableRowForTarifs = () => {
   }, []);
 
   const allRates = useSelector((state: RootState) => state.RateModel.Rates);
-
   const isLoading = useSelector(
     (state: RootState) => state.loading.models.RateModel
   );
@@ -38,6 +37,7 @@ const TableRowForTarifs = () => {
           {allRates?.map((item, index) => (
             <article className="tbody mb-1.5">
               <TableRowItemsForTarifs
+                isLoading={isLoading}
                 index={index}
                 Rates={item}
                 status="status"

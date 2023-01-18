@@ -60,13 +60,15 @@ const ColorPage = () => {
               </div>
             </article>
             <article className="tbody">
-              {isLoading
-                ? "Loading..."
-                : colorList.map((item: Color, index) => (
-                    <div key={index}>
-                      <TableRowForColor color={item} index={index} />
-                    </div>
-                  ))}
+              {colorList.map((item: Color, index) => (
+                <div key={index}>
+                  <TableRowForColor
+                    isLoading={isLoading}
+                    color={item}
+                    index={index}
+                  />
+                </div>
+              ))}
             </article>
           </section>
         </div>

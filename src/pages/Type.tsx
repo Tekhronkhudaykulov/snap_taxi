@@ -16,6 +16,9 @@ const Type = () => {
   }, []);
 
   const { type } = useSelector((state: RootState) => state.Directory);
+  const isLoading = useSelector(
+    (state: RootState) => state.loading.models.Directory
+  );
 
   const [isClientInfoShow, setisClientInfoShow] = useState(false);
 
@@ -54,7 +57,7 @@ const Type = () => {
             <article className="tbody">
               {type.map((item, index) => (
                 <div key={index}>
-                  <TableRowForType type={item} />
+                  <TableRowForType type={item} isLoading={isLoading} />
                 </div>
               ))}
             </article>

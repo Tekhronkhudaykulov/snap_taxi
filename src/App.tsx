@@ -39,9 +39,6 @@ function RequireAuth({ children }: any) {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/auth" element={<Auth />}></Route> {/* Карта */}
-      </Routes>
       <Layout>
         <Routes>
           <Route
@@ -162,6 +159,9 @@ export default function App() {
           {/* Tarifs */}
         </Routes>
       </Layout>
+      <Routes>
+        <Route path="/auth" element={<Auth />}></Route> {/* Карта */}
+      </Routes>
     </BrowserRouter>
   );
 }
