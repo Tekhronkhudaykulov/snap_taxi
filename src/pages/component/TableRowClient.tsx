@@ -27,7 +27,7 @@ const TableRowForCar = ({ brand, index, isLoading }: IsPhotoType) => {
           <div className="td td-for-client">
             <img
               style={{ width: "40px", height: "40px" }}
-              src={`${baseUrl}/${brand?.logo}`}
+              src={brand.logo}
               alt=""
             />
             {index}

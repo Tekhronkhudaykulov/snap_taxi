@@ -1,6 +1,4 @@
 import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { InputText } from "../components/InputText/InputText";
 import {
   SelectColor,
@@ -26,29 +24,10 @@ interface IsDriverForm {
   birthday: string;
 }
 
-const schema = yup.object({
-  avatar: yup.string().required(),
-  name: yup.string().required(),
-  car: {
-    type: yup.string().required(),
-    color: yup.string().required(),
-    number: yup.string().required(),
-  },
-  phone: yup.string().required(),
-  birthday: yup.string().required(),
-});
-
 const AddDriver = () => {
   const dispatch = useDispatch<Dispatch>();
 
-  const { control, handleSubmit } = useForm<IsDriverForm>({
-    resolver: yupResolver(schema),
-  });
-
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "addDriver",
-  // });
+  const { control, handleSubmit } = useForm<IsDriverForm>({});
 
   useEffect(() => {
     dispatch.RateModel.getRatesLoad();

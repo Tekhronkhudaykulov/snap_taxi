@@ -8,6 +8,7 @@ interface InputTextType {
   prompt: boolean | string;
   nameInput: string;
   onChange: () => void;
+  props: () => void;
 }
 
 function InputText({
@@ -16,6 +17,7 @@ function InputText({
   prompt,
   nameInput,
   onChange,
+  props,
 }: InputTextType) {
   return (
     <label className="input-text">
@@ -26,6 +28,7 @@ function InputText({
           name={nameInput}
           type="text"
           placeholder={placeholder}
+          {...props}
         />
         {prompt ? <span className="input-text__prompt">{prompt}</span> : null}
       </div>

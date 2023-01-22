@@ -9,9 +9,10 @@ import "./Select.scss";
 interface SelectType {
   label: string;
   onchange: () => void;
+  props: () => void;
 }
 
-function DataPicker({ label, onchange }: SelectType) {
+function DataPicker({ label, onchange, props }: SelectType) {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <label className="input-text">
@@ -23,13 +24,14 @@ function DataPicker({ label, onchange }: SelectType) {
             setStartDate(date);
             onchange(date);
           }}
+          {...props}
         />
       </div>
     </label>
   );
 }
 
-function SelectAutoModel({ label, onchange }: SelectType) {
+function SelectAutoModel({ label, onchange, props }: SelectType) {
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function SelectAutoModel({ label, onchange }: SelectType) {
       <span className="select__label">{label}</span>
       <div className="select__opts">
         <i className="isax-arrow-down-1"></i>
-        <select onChange={onchange}>
+        <select onChange={onchange} {...props}>
           <option disabled>Выберите данные</option>
           {type.map((item) => (
             <option value={item?._id}>{item?.name}</option>
@@ -55,7 +57,7 @@ function SelectAutoModel({ label, onchange }: SelectType) {
   );
 }
 
-function SelectColor({ label, onchange }: SelectType) {
+function SelectColor({ label, onchange, props }: SelectType) {
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
@@ -68,7 +70,7 @@ function SelectColor({ label, onchange }: SelectType) {
       <span className="select__label">{label}</span>
       <div className="select__opts">
         <i className="isax-arrow-down-1"></i>
-        <select onChange={onchange}>
+        <select {...props} onChange={onchange}>
           <option disabled>Выберите данные</option>
           {colorList.map((item) => (
             <option value={item?._id}>{item?.name}</option>

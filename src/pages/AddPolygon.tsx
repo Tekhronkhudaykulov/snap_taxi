@@ -6,8 +6,8 @@ import Title from "../components/Title/Title";
 import { Dispatch } from "../store";
 
 const mapState = {
-  center: [55.73, 37.9],
-  zoom: 10,
+  center: [41.3466624, 69.238784],
+  zoom: 12,
 };
 
 const AddPolygon = () => {

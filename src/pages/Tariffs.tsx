@@ -7,8 +7,8 @@ import Title from "../components/Title/Title";
 import { Dispatch, RootState } from "../store";
 
 const mapState = {
-  center: [55.73, 37.9],
-  zoom: 10,
+  center: [41.3466624, 69.238784],
+  zoom: 12,
 };
 
 export default function Tariffs({}) {
@@ -21,17 +21,17 @@ export default function Tariffs({}) {
   }, []);
 
   const { region } = useSelector((state: RootState) => state.Maps);
+  console.log(region);
 
   const [coordinates, setCoordinates] = useState([]);
 
-  const instanceRef = useCallback((ref: any) => {
-    if (ref) {
-      ref.editor.startDrawing();
-      ref.geometry.events.add("change", (e: any) =>
-        setCoordinates(e.get("newCoordinates"))
-      );
-    }
-  }, []);
+  // const instanceRef = useCallback((ref: any) => {
+  //   if (ref) {
+  //     ref.geometry.events.add("change", (e: any) =>
+  //       setCoordinates(e.get("newCoordinates"))
+  //     );
+  //   }
+  // }, []);
 
   return (
     <main className="page page__tariffs">
@@ -54,22 +54,18 @@ export default function Tariffs({}) {
           width="100%"
           height="700px"
           defaultState={mapState}
-          modules={[
-            "Polygon",
-            "geoObject.addon.editor",
-            "templateLayoutFactory",
-          ]}
+          modules={["Polygon", "templateLayoutFactory"]}
         >
-          <Polygon
-            instanceRef={instanceRef}
-            geometry={coordinates}
-            options={{
-              editorDrawingCursor: "crosshair",
-              fillColor: "#00FF00",
-              strokeColor: "#0000FF",
-              strokeWidth: 5,
-            }}
-          />
+          {region.map((item) => (
+            <Polygon
+              geometry={item.polygon.coordinates}
+              options={{
+                fillColor: "#00FF00",
+                strokeColor: "#0000FF",
+                strokeWidth: 5,
+              }}
+            />
+          ))}
         </Map>
       </YMaps>
       {isPolygonShow ? <PolygonInput /> : null}
