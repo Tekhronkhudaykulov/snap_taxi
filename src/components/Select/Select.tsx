@@ -5,14 +5,14 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./Select.scss";
+import { string } from "yup";
 
 interface SelectType {
   label: string;
   onchange: () => void;
-  props: () => void;
 }
 
-function DataPicker({ label, onchange, props }: SelectType) {
+function DataPicker({ label, onchange }: SelectType) {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <label className="input-text">
@@ -24,14 +24,13 @@ function DataPicker({ label, onchange, props }: SelectType) {
             setStartDate(date);
             onchange(date);
           }}
-          {...props}
         />
       </div>
     </label>
   );
 }
 
-function SelectAutoModel({ label, onchange, props }: SelectType) {
+function SelectAutoModel({ label, onchange }: SelectType) {
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
@@ -46,9 +45,9 @@ function SelectAutoModel({ label, onchange, props }: SelectType) {
       <span className="select__label">{label}</span>
       <div className="select__opts">
         <i className="isax-arrow-down-1"></i>
-        <select onChange={onchange} {...props}>
+        <select onChange={onchange}>
           <option disabled>Выберите данные</option>
-          {type.map((item) => (
+          {type.map((item, key) => (
             <option value={item?._id}>{item?.name}</option>
           ))}
         </select>
@@ -57,7 +56,7 @@ function SelectAutoModel({ label, onchange, props }: SelectType) {
   );
 }
 
-function SelectColor({ label, onchange, props }: SelectType) {
+function SelectColor({ label, onchange }: SelectType) {
   const dispatch = useDispatch<Dispatch>();
 
   useEffect(() => {
@@ -70,9 +69,9 @@ function SelectColor({ label, onchange, props }: SelectType) {
       <span className="select__label">{label}</span>
       <div className="select__opts">
         <i className="isax-arrow-down-1"></i>
-        <select {...props} onChange={onchange}>
+        <select onChange={onchange}>
           <option disabled>Выберите данные</option>
-          {colorList.map((item) => (
+          {colorList.map((item, key) => (
             <option value={item?._id}>{item?.name}</option>
           ))}
         </select>

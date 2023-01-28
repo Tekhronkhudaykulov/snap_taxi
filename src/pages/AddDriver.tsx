@@ -76,7 +76,6 @@ const AddDriver = () => {
                   type="file"
                   multiple
                   name="Ads[imageFiles][]"
-                  onchange="loadImage(event)"
                   id="file-input"
                   className="img-input"
                   style={{ display: "none" }}
@@ -99,7 +98,7 @@ const AddDriver = () => {
               render={({ field }) => (
                 <InputText
                   nameInput="name"
-                  onChange={(e) => field.onChange(e)}
+                  onchange={(e) => field.onChange(e)}
                   label={"Ф.И.О"}
                   placeholder={"Введите данные"}
                 />
@@ -176,19 +175,21 @@ const AddDriver = () => {
         <div className="grid justify-items-start">
           <h3 className="text-gray-500 mb-4">Выберите тарифы</h3>
           <div className="flex items-center gap-7">
-            {allRates?.map((item) => (
-              <CheckBox
-                item={item}
-                onChange={(isChecked) => {
-                  if (rates.includes(item?._id)) {
-                    setRates((prevState) =>
-                      prevState.filter((id) => id != item._id)
-                    );
-                  } else {
-                    setRates([...rates, item?._id]);
-                  }
-                }}
-              />
+            {allRates?.map((item, key) => (
+              <div key={key}>
+                <CheckBox
+                  item={item}
+                  onchange={(isChecked) => {
+                    if (rates.includes(item?._id)) {
+                      setRates((prevState) =>
+                        prevState.filter((id) => id != item._id)
+                      );
+                    } else {
+                      setRates([...rates, item?._id]);
+                    }
+                  }}
+                />
+              </div>
             ))}
           </div>
         </div>

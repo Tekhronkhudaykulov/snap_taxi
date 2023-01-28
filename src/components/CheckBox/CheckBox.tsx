@@ -3,15 +3,15 @@ import "./CheckBox.scss";
 
 interface CheckboxType {
   item: Rates;
-  onChange: () => void;
+  onchange: () => void;
 }
-const CheckBox = ({ item, onChange }: CheckboxType) => {
+const CheckBox = ({ item, onchange }: CheckboxType) => {
   return (
     <label className="checkbox">
       <input
         id={item?._id}
         value={item?._id}
-        onChange={onChange}
+        onChange={onchange}
         type="checkbox"
       />
       <span>{item?.title}</span>
