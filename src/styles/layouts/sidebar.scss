@@ -1,0 +1,74 @@
+.sidebar {
+   display: grid;
+   grid-template-rows: auto 1fr;
+   padding: 20px 15px;
+   box-shadow: -1px 0 25px rgba(#3c3c3c, 0.15);
+
+   &__logo {
+      margin: 0 auto 40px auto;
+      max-width: 100px;
+   }
+}
+
+.menu {
+   display: flex;
+   gap: 25px;
+   flex-direction: column;
+   .accourdion{
+      display: flex;
+      margin-top: -15px;
+      .box-accordion{
+         box-shadow: 0 0 0 0;
+         .typography{
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            color: #9d9e9e;
+            transition: all 0.2s ease 0s;
+            cursor: pointer;
+         }
+         .typography:hover{
+            color: #32ABE0;
+
+         }
+       
+      }
+   }
+
+
+   t{
+      box-shadow: none;
+      background-color: none;
+   }
+   &__item {
+      display: flex;
+      &:last-child {
+         display: flex;
+         align-items: flex-end;
+         flex: 1 1 auto;
+      }
+   }
+   &__link {
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      color: #9d9e9e;
+      transition: all 0.2s ease 0s;
+      &:hover {
+         color: #32ABE0;
+      }
+      i {
+         display: inline-block;
+         font-size: 20px;
+         margin-right: 10px;
+         &::before {
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+      }
+   }
+}

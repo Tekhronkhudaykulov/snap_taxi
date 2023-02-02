@@ -1,0 +1,50 @@
+.driver-status {
+   i {
+      display: block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      padding: 3px;
+      margin-right: 8px;
+      position: relative;
+      &::before {
+         content: "";
+         width: 9px;
+         height: 9px;
+         border-radius: 50%;
+         position: absolute;
+         top: 2px;
+         left: 2px;
+      }
+   }
+   i.online {
+      border: 1px solid #32abe0;
+      &::before {
+         background-color: #32abe0;
+      }
+   }
+   i.offline {
+      border: 1px solid #ff6f6f;
+      &::before {
+         background-color: #ff6f6f;
+      }
+   }
+   i.dowork {
+      border: 1px solid #44ff57;
+      &::before {
+         background-color: #44ff57;
+      }
+   }
+   i.wait {
+      border: 1px solid #f8c90f;
+      &::before {
+         background-color: #f8c90f;
+      }
+   }
+   i.free {
+      border: 1px solid #858585;
+      &::before {
+         background-color: #858585;
+      }
+   }
+}
